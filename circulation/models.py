@@ -12,12 +12,14 @@ class BorrowTransaction(models.Model):
 
     school = models.ForeignKey(
         'schools.School',
-        on_delete=models.CASCADE
+        on_delete=models.CASCADE,
+        related_name='borrow_transactions'
     )
 
     borrower = models.ForeignKey(
         'accounts.User',
-        on_delete=models.CASCADE
+        on_delete=models.CASCADE,
+        related_name='borrow_transactions'
     )
 
     book_copy = models.ForeignKey(
@@ -29,7 +31,8 @@ class BorrowTransaction(models.Model):
         'accounts.User',
         on_delete=models.SET_NULL,
         null=True,
-        related_name='borrow_processed_by'
+        blank=True,
+        related_name='processed_borrow_transactions'
     )
 
     borrow_date = models.DateField(
@@ -51,6 +54,17 @@ class BorrowTransaction(models.Model):
 
     notes = models.TextField(blank=True)
 
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        ordering = ['-borrow_date']
+        indexes = [
+            models.Index(fields=['status']),
+            models.Index(fields=['borrow_date']),
+        ]
+
     def __str__(self):
         return f'{self.borrower} - {self.book_copy}'
 
@@ -58,7 +72,8 @@ class Fine(models.Model):
 
     transaction = models.OneToOneField(
         BorrowTransaction,
-        on_delete=models.CASCADE
+        on_delete=models.CASCADE,
+        related_name='fine'
     )
 
     amount = models.DecimalField(
@@ -74,6 +89,11 @@ class Fine(models.Model):
     )
 
     notes = models.TextField(blank=True)
+
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ['-created_at']
 
     def __str__(self):
         return str(self.amount)
@@ -93,7 +113,8 @@ class Reservation(models.Model):
 
     book = models.ForeignKey(
         'books.Book',
-        on_delete=models.CASCADE
+        on_delete=models.CASCADE,
+        related_name='reservations'
     )
 
     reservation_date = models.DateTimeField(auto_now_add=True)
@@ -103,3 +124,11 @@ class Reservation(models.Model):
         choices=STATUS_CHOICES,
         default='waiting'
     )
+
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ['-reservation_date']
+
+    def __str__(self):
+        return f'{self.user} - {self.book}'
