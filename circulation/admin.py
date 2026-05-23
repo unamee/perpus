@@ -13,6 +13,9 @@ class BorrowTransactionAdmin(admin.ModelAdmin):
         "due_date",
         "return_date",
         "status",
+        "is_overdue",
+        "overdue_days",
+        "is_overdue_display",
     )
 
     search_fields = (
@@ -32,6 +35,15 @@ class BorrowTransactionAdmin(admin.ModelAdmin):
     ordering = ("-borrow_date",)
 
     list_per_page = 25
+
+    def is_overdue_display(self, obj):
+        return obj.is_overdue
+    is_overdue_display.boolean = True
+    is_overdue_display.short_description = 'Overdue'
+
+    def overdue_days_display(self, obj):
+        return obj.overdue_days
+    overdue_days_display.short_description = 'Late Days'
 
 
 @admin.register(Fine)
