@@ -61,7 +61,7 @@ class BorrowTransaction(models.Model):
 
     borrow_date = models.DateField(default=timezone.now)
 
-    due_date = models.DateField()
+    due_date = models.DateField(null=True, blank=True)
 
     return_date = models.DateField(null=True, blank=True)
 
@@ -82,6 +82,18 @@ class BorrowTransaction(models.Model):
 
     def save(self, *args, **kwargs):
         self.full_clean()
+        # Auto due date
+        if not self.due_date and self.status == 'borrowed':
+            policy = BorrowPolicy.objects.get(
+                school=self.school,
+                role=self.borrower.role,
+                is_active=True
+            )
+            self.due_date = (
+                self.borrow_date +
+                timezone.timedelta(days=policy.loan_days)
+            )
+
         # save transaction dulu
         super().save(*args, **kwargs)
         # update inventory setelah transaction sukses
@@ -114,6 +126,16 @@ class BorrowTransaction(models.Model):
                 )
                 if fresh_book_copy.status != "available":
                     raise ValidationError("Book is not available for borrowing.")
+                # cek borrow policy
+                policy = BorrowPolicy.objects.get(
+                    school=self.school, role=self.borrower.role, is_active=True
+                )
+                active_loans = BorrowTransaction.objects.filter(
+                    borrower=self.borrower, status="borrowed"
+                ).count()
+
+                if active_loans >= policy.max_books:
+                    raise ValidationError(f"Borrow limit exceeded ({policy.max_books})")
 
     @property
     def is_overdue(self):

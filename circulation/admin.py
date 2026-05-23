@@ -1,7 +1,23 @@
 from django.contrib import admin
 
-from .models import BorrowTransaction, Fine, Reservation
+from .models import BorrowPolicy, BorrowTransaction, Fine, Reservation
 
+
+@admin.register(BorrowPolicy)
+class BorrowPolicyAdmin(admin.ModelAdmin):
+
+    list_display = (
+        'school',
+        'role',
+        'max_books',
+        'loan_days',
+        'is_active'
+    )
+
+    list_filter = (
+        'school',
+        'role'
+    )
 
 @admin.register(BorrowTransaction)
 class BorrowTransactionAdmin(admin.ModelAdmin):
@@ -24,6 +40,10 @@ class BorrowTransactionAdmin(admin.ModelAdmin):
         "book_copy__barcode",
         "book_copy__inventory_code",
         "book_copy__book__title",
+    )
+
+    readonly_fields = (
+        'due_date',
     )
 
     list_filter = ("status", "borrow_date", "due_date", "school")

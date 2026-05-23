@@ -1,0 +1,41 @@
+✅ Schools
+✅ Users / Roles / Groups
+✅ Books / BookCopy / Inventory
+✅ Borrow / Return
+✅ Validation anti-double borrow
+✅ Auto Due Date (BorrowPolicy)
+✅ Fine Calculation
+✅ Overdue System
+✅ Policy Engine
+
+CORE ENGINE DONE
+↓
+REPORTING & OPERATIONS
+↓
+UI/UX
+↓
+API / Frontend
+
+
+Phase 1 — Operational Backend
+
+✅ DONE
+
+Phase 2 — Reports
+
+🔄 NEXT
+
+overdue report
+fine report
+top readers
+most borrowed books
+Phase 3 — HTMX + UIkit
+circulation UI
+barcode input UI
+dashboard
+Phase 4 — API
+DRF
+JWT
+Phase 5 — Vue (opsional)
+
+Kalau memang nanti perlu SPA.
