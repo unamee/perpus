@@ -1,0 +1,34 @@
+{% extends 'base.html' %} {% block content %}
+
+<div class="uk-card uk-card-default uk-card-body">
+  <h2>Borrow Book</h2>
+
+  <form>
+    <div class="uk-margin">
+      <label class="uk-form-label"> Barcode </label>
+
+      <input
+        class="uk-input"
+        type="text"
+        name="barcode"
+        hx-get="/circulation/barcode-lookup/"
+        hx-trigger="keyup changed delay:500ms"
+        hx-target="#book-result"
+        placeholder="Scan barcode"
+      />
+    </div>
+    <div id="book-result"></div>
+
+    <div class="uk-margin">
+      <label class="uk-form-label"> Borrower </label>
+
+      <select class="uk-select">
+        <option>Select Borrower</option>
+      </select>
+    </div>
+
+    <button class="uk-button uk-button-primary">Borrow</button>
+  </form>
+</div>
+
+{% endblock %}

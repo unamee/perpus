@@ -1,12 +1,12 @@
-✅ Schools
-✅ Users / Roles / Groups
-✅ Books / BookCopy / Inventory
+✅ Accounts / Roles / Groups
+✅ Schools / Academics
+✅ Books / Inventory
 ✅ Borrow / Return
-✅ Validation anti-double borrow
-✅ Auto Due Date (BorrowPolicy)
-✅ Fine Calculation
-✅ Overdue System
-✅ Policy Engine
+✅ Borrow Policy
+✅ Fine
+✅ Overdue
+✅ Reporting Queries
+✅ Report Dashboard
 
 CORE ENGINE DONE
 ↓

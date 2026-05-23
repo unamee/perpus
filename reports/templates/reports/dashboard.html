@@ -1,0 +1,11 @@
+<h1>Reports Dashboard</h1>
+
+<h2>Active Borrow</h2>
+
+<ul>
+  {% for row in active_borrows %}
+
+  <li>{{ row.borrower }} - {{ row.book_copy.book.title }}</li>
+
+  {% endfor %}
+</ul>

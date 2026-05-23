@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>{% block title %} School Library System {% endblock %}</title>
+
+    <!-- UIkit CSS -->
+
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/uikit@3.21.16/dist/css/uikit.min.css"
+    />
+
+    <!-- HTMX -->
+
+    <script src="https://unpkg.com/htmx.org@2.0.4"></script>
+
+    {% block extra_css %} {% endblock %}
+  </head>
+
+  <body>
+    <!-- NAVBAR -->
+
+    <nav class="uk-navbar-container" uk-navbar>
+      <div class="uk-container">
+        <div class="uk-navbar-left">
+          <a href="/" class="uk-navbar-item uk-logo"> Library System </a>
+
+          <ul class="uk-navbar-nav">
+            <li>
+              <a href="/circulation/borrow/"> Borrow </a>
+            </li>
+
+            <li>
+              <a href="/reports/"> Reports </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <!-- CONTENT -->
+
+    <div class="uk-container uk-margin-top">
+      {% block content %} {% endblock %}
+    </div>
+
+    <!-- UIkit JS -->
+
+    <script src="https://cdn.jsdelivr.net/npm/uikit@3.21.16/dist/js/uikit.min.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/uikit@3.21.16/dist/js/uikit-icons.min.js"></script>
+
+    {% block extra_js %} {% endblock %}
+  </body>
+</html>

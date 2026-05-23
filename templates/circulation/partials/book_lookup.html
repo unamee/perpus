@@ -1,0 +1,22 @@
+{% if book_copy %}
+
+<div class="uk-card uk-card-secondary uk-card-body uk-margin">
+  <h3>{{ book_copy.book.title }}</h3>
+
+  <p>Barcode: {{ book_copy.barcode }}</p>
+
+  <p>Inventory: {{ book_copy.inventory_code }}</p>
+
+  <p>Shelf: {{ book_copy.shelf }}</p>
+
+  <p>
+    Status:
+    <strong> {{ book_copy.status }} </strong>
+  </p>
+</div>
+
+{% else %}
+
+<div class="uk-alert-danger" uk-alert>Book not found.</div>
+
+{% endif %}
