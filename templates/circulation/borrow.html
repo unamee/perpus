@@ -3,13 +3,18 @@
 <div class="uk-card uk-card-default uk-card-body">
   <h2>Borrow Book</h2>
 
-  <form>
+  <form
+    hx-post="/circulation/borrow-submit/"
+    hx-target="#borrow-result"
+    hx-swap="innerHTML"
+  >
+    {% csrf_token %}
+
     <div class="uk-margin">
-      <label class="uk-form-label"> Barcode </label>
+      <label>Barcode</label>
 
       <input
         class="uk-input"
-        type="text"
         name="barcode"
         hx-get="/circulation/barcode-lookup/"
         hx-trigger="keyup changed delay:500ms"
@@ -17,18 +22,34 @@
         placeholder="Scan barcode"
       />
     </div>
+
     <div id="book-result"></div>
 
     <div class="uk-margin">
-      <label class="uk-form-label"> Borrower </label>
+      <label>Borrower</label>
 
-      <select class="uk-select">
-        <option>Select Borrower</option>
+      <select
+        class="uk-select"
+        name="borrower"
+        hx-get="/circulation/due-date-preview/"
+        hx-trigger="change"
+        hx-target="#due-date-preview"
+      >
+        <option value="">Select Borrower</option>
+
+        {% for user in borrowers %}
+
+        <option value="{{ user.id }}">{{ user.username }}</option>
+
+        {% endfor %}
       </select>
+      <div id="due-date-preview"></div>
     </div>
 
     <button class="uk-button uk-button-primary">Borrow</button>
   </form>
+
+  <div id="borrow-result"></div>
 </div>
 
 {% endblock %}

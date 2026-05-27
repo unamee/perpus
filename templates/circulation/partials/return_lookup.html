@@ -1,0 +1,81 @@
+{% if transaction %}
+
+<div
+    class="uk-card
+           uk-card-secondary
+           uk-card-body">
+
+    <h3>
+
+        {{ transaction.book_copy.book.title }}
+
+    </h3>
+
+    <p>
+
+        Borrower:
+
+        {{ transaction.borrower }}
+
+    </p>
+
+    <p>
+
+        Due Date:
+
+        {{ transaction.due_date }}
+
+    </p>
+
+    <p>
+
+        Overdue:
+
+        {{ transaction.is_overdue }}
+
+    </p>
+
+    <p>
+
+        Late Days:
+
+        {{ transaction.overdue_days }}
+
+    </p>
+
+    <form
+        hx-post="/circulation/return-submit/"
+        hx-target="#return-result">
+
+        {% csrf_token %}
+
+        <input
+            type="hidden"
+
+            name="transaction_id"
+
+            value="{{ transaction.id }}">
+
+        <button
+            class="uk-button
+                   uk-button-danger">
+
+            Confirm Return
+
+        </button>
+
+    </form>
+
+</div>
+
+{% else %}
+
+<div
+    class="uk-alert-danger"
+    uk-alert>
+
+    Active borrow transaction not found.
+
+</div>
+
+{% endif %}

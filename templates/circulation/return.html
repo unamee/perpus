@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="uk-card uk-card-default uk-card-body">
+
+<h2>Return Book</h2>
+
+<div class="uk-margin">
+
+    <label>
+
+        Barcode
+
+    </label>
+
+    <input
+        class="uk-input"
+
+        name="barcode"
+
+        hx-get="/circulation/return-lookup/"
+
+        hx-trigger="keyup changed delay:500ms"
+
+        hx-target="#return-result"
+
+        placeholder="Scan barcode">
+
+</div>
+
+<div id="return-result">
+
+</div>
+
+</div>
+
+{% endblock %}
