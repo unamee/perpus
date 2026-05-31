@@ -1,0 +1,52 @@
+{% extends 'base.html' %} {% block content %}
+
+<h2>Reservation Queue</h2>
+
+<table class="uk-table uk-table-divider">
+  <thead>
+    <tr>
+      <th>User</th>
+
+      <th>Book</th>
+
+      <th>Status</th>
+
+      <th>Action</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    {% for r in reservations %}
+
+    <tr>
+      <td>{{ r.user }}</td>
+
+      <td>{{ r.book }}</td>
+
+      <td>{{ r.get_status_display }}</td>
+
+      <td>
+        {% if r.status == 'ready' %}
+
+        <form
+          hx-post="/circulation/reservation-pickup/"
+          hx-target="#queue-result"
+        >
+          {% csrf_token %}
+
+          <input type="hidden" name="reservation_id" value="{{ r.id }}" />
+
+          <button class="uk-button uk-button-primary">Pickup</button>
+        </form>
+
+        {% endif %}
+      </td>
+    </tr>
+
+    {% endfor %}
+  </tbody>
+</table>
+
+<div id="queue-result"></div>
+
+{% endblock %}

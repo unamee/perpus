@@ -5,9 +5,13 @@ from .views import (
     borrow_page,
     borrow_submit,
     due_date_preview,
+    reservation_pickup,
+    reservation_queue,
+    reserve_page,
+    reserve_submit,
     return_lookup,
     return_page,
-    return_submit,     
+    return_submit,
 )
 
 urlpatterns = [
@@ -18,4 +22,8 @@ urlpatterns = [
     path("return/", return_page, name="return_page"),
     path("return-lookup/", return_lookup, name="return_lookup"),
     path("return-submit/", return_submit, name="return_submit"),
+    path("reserve/", reserve_page, name="reserve_page"),
+    path("reserve-submit/", reserve_submit, name="reserve_submit"),
+    path("reservation-queue/", reservation_queue, name="reservation_queue"),
+    path("reservation-pickup/", reservation_pickup, name="reservation_pickup"),
 ]

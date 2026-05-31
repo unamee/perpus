@@ -33,6 +33,7 @@
             <li>
               <a href="/reports/"> Dashboard </a>
             </li>
+            {% if user.is_authenticated %} {% if user.role == 'librarian' or user.role == 'school_admin' %}
             <li>
               <a href="/circulation/borrow/"> Borrow </a>
             </li>
@@ -41,9 +42,37 @@
               <a href="/circulation/return/"> Return </a>
             </li>
 
+            {% endif %}
+
             <li>
               <a href="/reports/"> Reports </a>
             </li>
+
+            <li>
+              <a href="/circulation/reserve/"> Reserve </a>
+            </li>
+
+            <li>
+              <form action="/logout/" method="post" style="margin: 0">
+                {% csrf_token %}
+
+                <button
+                  type="submit"
+                  style="background: none; border: none; cursor: pointer"
+                  class="uk-navbar-item"
+                >
+                  LOGOUT
+                </button>
+              </form>
+            </li>
+
+            {% else %}
+
+            <li>
+              <a href="/login/"> Login </a>
+            </li>
+
+            {% endif %}
           </ul>
         </div>
       </div>

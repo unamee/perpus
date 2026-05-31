@@ -106,6 +106,15 @@ class BorrowTransaction(models.Model):
             if self.book_copy.status != "available":
                 self.book_copy.status = "available"
                 self.book_copy.save()
+                next_reservation = Reservation.objects.filter(
+                    book=self.book_copy.book,
+                    status='waiting'
+                ).order_by(
+                    'reservation_date'
+                ).first()
+                if next_reservation:
+                    next_reservation.status='ready'
+                    next_reservation.save()
 
             # Fine calculation
             if self.return_date and self.return_date > self.due_date:
@@ -180,8 +189,16 @@ class Reservation(models.Model):
 
     STATUS_CHOICES = (
         ("waiting", "Waiting"),
+        ('ready','Ready'),
         ("completed", "Completed"),
         ("cancelled", "Cancelled"),
+    )
+
+    school = models.ForeignKey(
+        'schools.School',
+        on_delete=models.CASCADE,
+        null=True,
+        blank=True,
     )
 
     user = models.ForeignKey("accounts.User", on_delete=models.CASCADE)
